@@ -7,7 +7,7 @@ using namespace std;
 class displays
 {
 public:
-	void DisplayHeader()
+	 void DisplayHeader()
 	{
 		system("cls");
 		cout << endl;
@@ -64,16 +64,15 @@ class Movie
 	//so the next time we open file we can start reading from the same position
 	string  title,  runtime, synopsis, line, id;
 	public:
-	
 	Movie() //read data from file and paste to movie attributes
 	{
 		ifstream is("movies.txt");
 		if(is)
 		{
 		is.seekg(position, ios::beg);
-		getline(is, id);
 		getline(is, line);
 		title = line;
+		getline(is, id);
 		getline(is, line);
 		runtime = line;
 		getline(is, synopsis, '/');
@@ -107,7 +106,12 @@ class Admin
 		string s; //temporary string to hold movie info
 		ofstream os("movies.txt", ios::app); //open file in append mode to add movies
 		
-		while(1)
+		cout << "Enter Movie Title: ";
+    while( getline( cin, s ) && s != "" )
+         {
+           os << s << endl;
+         }
+	while(1)
 		{
 			int z=0;
 			cout << "Enter Movie ID: ";
@@ -128,11 +132,7 @@ class Admin
 		}
 		}
 		fflush(stdin);
-		cout << "Enter Movie Title: ";
-    while( getline( cin, s ) && s != "" )
-    {
-        os << s << endl;
-    }
+		
 	cout << "Enter Running Time: ";
 	getline(cin , s);
 	os << s << endl;
@@ -165,7 +165,8 @@ int main()
 	//object[i].display();
 	}
 	Admin obj;
-	//obj.addmovie();
+	obj.addmovie();
+	obj.addmovie();
 	for(Movie v: object)
 	v.display();
 }
