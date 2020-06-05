@@ -1,5 +1,11 @@
 # Movie Reservation
  OOP project- console based movie reservation system
-Ignore all .json files, those are for my vscode.
-Our project files are project.cpp and movies.txt is the data file.
+project.cpp contains source code.
+admin file contains username and password.
+movies file contains all movies
+price file contains ticket prices
+customer details file will have objects written in it.
+if the program crashes at view all bookings,
+delete customer details file and create it again.
+
 
