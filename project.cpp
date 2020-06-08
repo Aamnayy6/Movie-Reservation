@@ -395,8 +395,8 @@ class Purchase : public Registration
 {
 	char* cc_number = new char[200];
 	char* cc_code = new char[200];
-	char* cc_type = new char[200];
-	char* cc_expiration = new char[200];
+	char* cc_expiration_month = new char[200];
+	char* cc_expiration_year = new char[200];
 public:
 	Purchase()
 	{
@@ -421,15 +421,15 @@ public:
 			{
 				x = 1;
 			}
-			cout << "Enter Credit Card Type: ";
-			cin.getline(cc_type, 199);
-			if (is_digits(cc_type) == false)
+			cout << "Enter Credit Expiry Month: ";
+			cin.getline(cc_expiration_month, 199);
+			if (is_digits(cc_expiration_month) == false)
 			{
 				x = 1;
 			}
 			cout << "Enter Credit Card Expiry Year: ";
-			cin.getline(cc_expiration, 199);
-			if (is_digits(cc_expiration) == false)
+			cin.getline(cc_expiration_year, 199);
+			if (is_digits(cc_expiration_year) == false)
 			{
 				x = 1;
 			}
@@ -452,8 +452,8 @@ public:
 		cout << "----Purchase Details----" << endl;
 		cout << "\nCredit Card Number: " << cc_number << endl;
 		cout << "Credit Card Code: " << cc_code << endl;
-		cout << "Credit Card Type: " << cc_type << endl;
-		cout << "Credit Card Expiry: " << cc_expiration << endl;
+		cout << "Credit Card Expiry Month: " << cc_expiration_month << endl;
+		cout << "Credit Card Expiry Year: " << cc_expiration_year << endl;
 	}
 	void fileitt()
 	{
