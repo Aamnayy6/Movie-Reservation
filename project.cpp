@@ -521,6 +521,7 @@ public:
 				system("CLS");
 				this->deletemovie();
 				cout << "Movie deleted successfully!" << endl;
+				cout << "Movie will not be available for future customers to view." << endl;
 				system("PAUSE");
 				system("CLS");
 			}
@@ -838,64 +839,69 @@ public:
 	}
 	void mainmenuoptions() //choose from main menu using switch
 	{
-		int choice;
-		cin >> choice;
-		if (choice == 1)
-
+		while (1)
 		{
-			system("CLS");
-			Customer* cust = new Customer;
-			cust->customerdataregistration();
-			cust->fileit();
-			Booking* book = new Booking;
-			book->movieselection();
-			book->getprice();
-			book->fileit();
-			Purchase* pur = new Purchase;
-			pur->purchaseinput();
-			pur->fileitt();
-			Registration* obj = new Registration;
-			int c;
-			while (1)
+			int choice;
+			cin >> choice;
+			if (choice == 1)
+
 			{
-				c = obj->menu();
-				if (c == 1)
+				system("CLS");
+				Customer* cust = new Customer;
+				cust->customerdataregistration();
+				cust->fileit();
+				Booking* book = new Booking;
+				book->movieselection();
+				book->getprice();
+				book->fileit();
+				Purchase* pur = new Purchase;
+				pur->purchaseinput();
+				pur->fileitt();
+				Registration* obj = new Registration;
+				int c;
+				while (1)
 				{
-					system("CLS");
-					cout << "\n\t\t\t\t------------Ticket-----------\n" << endl;
-					cust->displaycustomerdetails();
-					book->viewbooking();
-					pur->purchasedetails();
-					system("PAUSE");
-					system("CLS");
+					c = obj->menu();
+					if (c == 1)
+					{
+						system("CLS");
+						cout << "\n\t\t\t\t------------Ticket-----------\n" << endl;
+						cust->displaycustomerdetails();
+						book->viewbooking();
+						pur->purchasedetails();
+						system("PAUSE");
+						system("CLS");
+					}
+					if (c == 2)
+					{
+						system("CLS");
+						mainmenu();
+						mainmenuoptions();
+					}
 				}
-				if (c == 2)
-				{
-					system("CLS");
-					mainmenu();
-					mainmenuoptions();
-				}
+				break;
 			}
-			
+			if (choice == 2)
+			{
+				system("CLS");
+				adminfunctions();
+				break;
+			}
+			if (choice == 3)
+			{
+				//to clear all object data files
+				ofstream filehandler("customerdetails.txt");
+				filehandler.close();
+				exit(1);
+			}
+			if (choice != 1 && choice != 2 && choice != 3)
+			{
+				cout << "\nInvalid Input" << endl;
+				cin.clear();
+				cin.ignore();
+			}
 		}
-		if (choice == 2)
-		{
-			system("CLS");
-			adminfunctions();
-
-		}
-		if (choice == 3)
-		{
-			//to clear all object data files
-			ofstream filehandler("customerdetails.txt");
-			filehandler.close();
-			exit(1);
-		}
-			
 		
-		else
-			cout << "Invalid Input";
-
 	}
 }; // this is the main class, Like the head class
 Theatre* display = new Theatre;
