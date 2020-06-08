@@ -89,12 +89,13 @@ public:
 	void movieselection()
 	{
 		string temp;
-		cout << "Use arrow keys to move to the next or previous movie. Press y for movie selection." << endl;
+		cout << "Use arrow keys to move to the next or previous movie. Press y for movie selection." << endl << endl;
 		vector <Movie> ::iterator itr = object.begin();
 		itr->display();
 		itr = object.begin();
 		while (1)
 		{
+
 			int c = _getch();
 			if (c == 0 || c == 224|| c == 'y')
 			{
@@ -107,7 +108,7 @@ public:
 					break;
 
 				}
-				switch ((c = _getch()))
+				switch ((c = _getch())) 
 				{
 				case KEY_LEFT:
 
@@ -124,7 +125,6 @@ public:
 					}
 
 				case KEY_RIGHT:
-
 					if (itr == object.end() - 1)
 					{
 						break;
@@ -146,6 +146,7 @@ public:
 		system("CLS");
 		while (1)
 		{
+			
 			int timechoice;
 			cout << "Available Timings" << endl;
 			cout << "[1]	4:00 pm" << endl;
@@ -170,8 +171,13 @@ public:
 				strcpy_s(time, 9, temp.c_str());
 				break;
 			}
-			else
-				cout << "Invalid Input";
+			else if (timechoice != 1 && timechoice != 2 && timechoice != 3)
+			{
+				cout << "\nInvalid Input" << endl;;
+				cin.clear();
+				cin.ignore();
+			}
+				
 		}
 		cin.ignore();
 		system("CLS");
@@ -179,9 +185,11 @@ public:
 		while (1)
 		{
 			cin >> numberoftickets;
-			if (numberoftickets > 20)
+			if (numberoftickets > 20 || cin.fail())
 			{
 				cout << "Error, please enter a value less than 21" << endl;
+				cin.clear();
+				cin.ignore();
 			}
 			else
 				break;
@@ -207,41 +215,56 @@ public:
 		cout << "[3]	Diamond " << endl;
 		int x;
 		string tempo;
-		cin >> x;
-		if (x == 1)
+		while (1)
 		{
-			if (goldseats >= numberoftickets)
+			cin >> x;
+			if (x == 1)
 			{
-				tempo = "gold";
-				strcpy_s(category, 9, tempo.c_str());
-				goldseats = goldseats - numberoftickets;
+				if (goldseats >= numberoftickets)
+				{
+					tempo = "gold";
+					strcpy_s(category, 9, tempo.c_str());
+					goldseats = goldseats - numberoftickets;
+					break;
+				}
+				else
+				{
+					cout << "\nSeats Unavailable" << endl;
+				}
+					
 			}
-			else
-				cout << "\nSeats Unavailable" << endl;
-		}
-		if (x == 2)
-		{
-			if (silverseats >= numberoftickets)
+			if (x == 2)
 			{
-				tempo = "silver";
-				strcpy_s(category, 9, tempo.c_str());
-				silverseats = silverseats - numberoftickets;
+				if (silverseats >= numberoftickets)
+				{
+					tempo = "silver";
+					strcpy_s(category, 9, tempo.c_str());
+					silverseats = silverseats - numberoftickets;
+					break;
+				}
+				else
+					cout << "\nSeats Unavailable" << endl;
 			}
-		    else
-			cout << "\nSeats Unavailable" << endl;
-		}
-		if (x == 3)
-		{
-			if (silverseats >= numberoftickets)
+			if (x == 3)
 			{
-				tempo = "diamond";
-				strcpy_s(category, 9, tempo.c_str());
-				diamondseats = diamondseats - numberoftickets;
+				if (silverseats >= numberoftickets)
+				{
+					tempo = "diamond";
+					strcpy_s(category, 9, tempo.c_str());
+					diamondseats = diamondseats - numberoftickets;
+					break;
+				}
+				else
+					cout << "\nSeats Unavailable" << endl;
 			}
-			else
-				cout << "\nSeats Unavailable" << endl;
+			if (x != 1 && x != 2 && x != 3)
+			{
+				cout << "\nInvalid Input" << endl;
+				cin.clear();
+				cin.ignore();
+			}
 		}
-		system("CLS");
+		
 	}
 	void getprice()
 	{
@@ -317,12 +340,12 @@ class Customer:public Registration
 	char* lastname = new char[500];
 	char* email = new char[500];
 	char* number = new char[500];
-	char* address = new char[500];;
+	char* address = new char[500];
 public:
 	Customer()
 	{
 	}
-	virtual void customerdataregistration()
+	void customerdataregistration()
 	{
 		cin.ignore();
 		cout << "Enter your First Name : ";
@@ -341,19 +364,17 @@ public:
 	}
 	void displaycustomerdetails()
 	{
-
+		
 		cout << "\n----Customer Details----" << endl;
 		cout << "\nFirst Name : " << firstname << endl;
 		cout << "Last Name : " << lastname << endl;
 		cout << "Contact Number : " << number << endl;
 		cout << "Email : " << email << endl;
 		cout << "Address: " << address << endl;
-
 	}
 
 	void fileit()
 	{
-
 		ofstream os2("customerdetails.txt", ios::app| ios::binary);
 		os2.write((char*)this, sizeof(*this));
 		os2.close();
@@ -363,7 +384,6 @@ public:
 		ifstream is2("customerdetails.txt");
 		if (is2)
 		{
-
 			is2.read((char*)this, sizeof(*this));
 		}
 		displaycustomerdetails();
@@ -384,18 +404,48 @@ public:
 	}
 	void purchaseinput()
 	{
+		
 		cin.ignore();
-		cout << "Enter Credit Card Number: ";
-		cin.getline(cc_number, 199);
-		cout << "Enter Credit Card Code: ";
-		cin.getline(cc_code, 199);
-		cout << "Enter Credit Card Type: ";
-		cin.getline(cc_type, 199);
-		cout << "Enter Credit Card Expiry Year: ";
-		cin.getline(cc_expiration, 199);
+		while (1)
+		{
+			int x = 0;
+			cout << "Enter Credit Card Number: ";
+			cin.getline(cc_number, 199);
+			if (is_digits(cc_number) == false)
+			{
+				x = 1;
+			}
+			cout << "Enter Credit Card Code: ";
+			cin.getline(cc_code, 199);
+			if (is_digits(cc_code) == false)
+			{
+				x = 1;
+			}
+			cout << "Enter Credit Card Type: ";
+			cin.getline(cc_type, 199);
+			if (is_digits(cc_type) == false)
+			{
+				x = 1;
+			}
+			cout << "Enter Credit Card Expiry Year: ";
+			cin.getline(cc_expiration, 199);
+			if (is_digits(cc_expiration) == false)
+			{
+				x = 1;
+			}
+			if (x == 0)
+				break;
+			else
+				cout << "\nThe above fields only accept numbers as valid input, try again" << endl;
+		}
+		
 		cout << "Movie Ticket Booked!" << endl;
 		system("PAUSE");
 		system("CLS");
+	}
+	bool is_digits(const std::string& str) //checking if input is numbers only
+	{
+		return str.find_first_not_of("0123456789") == std::string::npos;
 	}
 	void purchasedetails()
 	{
@@ -512,15 +562,24 @@ public:
 		passwordentered = "";
 		fflush(stdin);
 		char ch;
-		for (int i = 0;;) //masking password with aesterik until user presses enter
+		for (int i = 0;i<5;) //masking password with aesterik until user presses enter
 		{
 			ch = _getch();
 			if (ch == '\r') //terminate whe user presses enter
 				break;
 			if (ch == '\b')// handle backspace
 			{
-				cout << "\b \b";
-				i--; //so we can overwrite this array element again
+				
+				if (i <=0)
+				{
+
+				}
+				else
+				{
+					cout << "\b \b";
+					i--; //so we can overwrite this array element again
+				}
+				    
 			}
 			else
 			{
@@ -535,7 +594,7 @@ public:
 		}
 		//not efficient but works ¯\_(ツ)_/¯
 		ifstream is("admin.txt");
-		if (is)
+		if(is)
 		{
 			getline(is, usernamefromfile);
 			getline(is, passwordfromfile);
@@ -546,7 +605,6 @@ public:
 		}
 		is.close();
 	}
-
 	Admin()
 	{
 		int i = 0;
@@ -555,7 +613,7 @@ public:
 		{
 			cout << "Username: ";
 			cin >> usernameentered;
-			cout << "Enter Password: ";
+			cout << "Enter 5-character Password:  ";
 			maskpassword();
 			if (passwordentered == passwordfromfile && usernameentered == usernamefromfile)
 			{
@@ -592,9 +650,18 @@ public:
 		maskpassword();
 		if (passwordentered == passwordfromfile)
 		{
-			cout << "\nEnter new password: ";
-			passwordentered = "";
-			cin >> passwordentered;
+			while (1)
+			{
+				cout << "\nEnter new password, password length MUST be 5 characters: ";
+				passwordentered = "";
+				cin >> passwordentered;
+				if (passwordentered.length() != 5)
+					cout << "Password must be 5 characters long" << endl;
+				else
+					break;
+			}
+			
+			
 			ifstream is("admin.txt");
 			string line;
 			if (is)
@@ -625,13 +692,13 @@ public:
 		}
 		
 	}
-
 	void addmovie()
 	{
 		string s; //temporary string to hold movie info
 		ofstream os("movies.txt", ios::app); //open file in append mode to add movies
 		cin.ignore();
 		cout << "Enter Movie Title: ";
+		getline(cin, s);
 		while (getline(cin, s) && s != "")
 		{
 			os << s << endl;
@@ -641,9 +708,9 @@ public:
 			int z = 0;
 			cout << "Enter Movie ID: ";
 			cin >> s;
-			for (Movie v : object)
+			for (Movie v: object)
 			{
-
+				v.getID();
 				if (s == v.getID())
 				{
 					z = 1;
@@ -699,7 +766,6 @@ public:
 			{
 				break;
 			}
-
 		}
 	}
 	void viewbookings()
@@ -729,21 +795,6 @@ public:
 		}
 		handles.close();
 	}
-	void setprice()
-	{
-		//im too tired to implement this function 
-		int ch;
-		cout << "Which ticket price do you want to change?" << endl;
-		cout << "[1]	Gold" << endl;
-		cout << "[2]	Silver" << endl;
-		cout << "[3]	Diamond " << endl;
-		cin >> ch;
-		if (ch == 1)
-		{
-			//getline();
-		}
-	}
-	
 };
 class Theatre
 {
@@ -778,7 +829,7 @@ public:
 
 	void mainmenu()
 	{
-		cout << "Welcome to the Movie Reservation System. " << endl;
+		cout << "Welcome to the Movie Reservation System! " << endl;
 		cout << "Select option: " << endl;
 		cout << "[1]	User" << endl;
 		cout << "[2]	Admin" << endl;
@@ -867,7 +918,6 @@ void adminfunctions() //checks if password is correct then gives access to admin
 	if (obj->getValidity() == true)
 	{
 		obj->adminmenu();
-	
 	}
 	else if (obj->getValidity() == false) //if the user doesn't enter correct password, the admin object is deleted to prevent access of any admin functions
 	{
