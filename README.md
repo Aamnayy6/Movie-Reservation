@@ -1,5 +1,7 @@
 # Movie Reservation
  OOP project- console based movie reservation system
+ to access admin panel:
+ passeword: tired
 project.cpp contains source code.
 admin file contains username and password.
 movies file contains all movies
