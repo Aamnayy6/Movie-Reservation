@@ -700,10 +700,7 @@ public:
 		cin.ignore();
 		cout << "Enter Movie Title: ";
 		getline(cin, s);
-		while (getline(cin, s) && s != "")
-		{
 			os << s << endl;
-		}
 		while (1)
 		{
 			int z = 0;
@@ -711,7 +708,6 @@ public:
 			cin >> s;
 			for (Movie v: object)
 			{
-				v.getID();
 				if (s == v.getID())
 				{
 					z = 1;
@@ -733,7 +729,7 @@ public:
 		cin.ignore();
 		cout << "Enter Synopsis: ";
 		fflush(stdin);
-		while (getline(cin, s) && s != "")
+		while (getline(cin, s) && s !="")
 		{
 			os << s << endl;
 		}
@@ -800,7 +796,7 @@ public:
 class Theatre
 {
 public:
-	void DisplayHeader() //I kinda stole this :/
+	void displaybox() //I kinda stole this :/
 	{
 		system("CLS");
 		cout << endl;
@@ -912,7 +908,7 @@ int main()
 		Movie mov;
 		object.push_back(mov);
 	}
-	display->DisplayHeader();
+	display->displaybox();
 	display->mainmenu();
 	display->mainmenuoptions();
 
